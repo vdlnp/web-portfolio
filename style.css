@@ -1,0 +1,188 @@
+/* style.css */
+
+/* Overall Body Styling */
+body {
+    font-family: 'Arial Black', sans-serif;
+    background-color: #111;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    overflow-x: hidden; /* Prevent horizontal scrollbar */
+}
+
+/* Header Styling */
+header {
+    background: linear-gradient(to right, #ff00ff, #00ffff);
+    padding: 30px 20px; /* Increased padding for better spacing */
+    margin-bottom: 40px; /* Increased margin for visual separation */
+    box-shadow: 0 0 30px rgba(255, 0, 255, 0.7); /* Stronger shadow */
+    position: relative; /* For neon border effect */
+    overflow: hidden; /* Hide pseudo-element overflow */
+}
+
+header::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border: 3px dashed #00ffff;
+    z-index: 0; /* Place behind content */
+    pointer-events: none; /* Prevent blocking clicks */
+}
+
+header h1 {
+    font-size: 3.5em; /* Larger font size */
+    text-shadow: 3px 3px 7px #000; /* Stronger text shadow */
+    position: relative; /* Bring text in front of the border */
+    z-index: 1;
+}
+
+/* Navigation Styling */
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 25px; /* Increased spacing */
+    font-size: 1.3em; /* Slightly larger font */
+    text-shadow: 1px 1px 4px #000; /* Stronger shadow */
+    transition: color 0.3s ease; /* Smooth color transition on hover */
+}
+
+nav a:hover {
+    color: #ff00ff; /* Neon pink on hover */
+}
+
+/* Section Styling */
+section {
+    padding: 40px; /* Increased padding */
+    margin-bottom: 40px; /* Increased margin */
+    background-color: rgba(0, 0, 0, 0.7); /* Slightly more opaque background */
+    border: 3px dashed #ff00ff; /* Thicker border */
+    position: relative; /* For pseudo-element border effect */
+    overflow: hidden; /* Hide pseudo-element overflow */
+}
+
+section::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    border: 3px dashed #00ffff;
+    z-index: 0;
+    pointer-events: none;
+}
+
+section h2 {
+    font-size: 3em; /* Larger title font */
+    margin-bottom: 30px; /* Increased spacing */
+    text-shadow: 3px 3px 7px #000; /* Stronger text shadow */
+    position: relative;
+    z-index: 1;
+}
+
+/* About Section Styling */
+#about img {
+    width: 220px; /* Slightly larger image */
+    border-radius: 50%;
+    border: 6px solid #00ffff; /* Thicker border */
+    margin-bottom: 30px; /* Increased spacing */
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.7); /* Add a glow effect */
+}
+
+#about p {
+    font-size: 1.2em;
+    line-height: 1.6; /* Improved readability */
+    padding: 0 20px;
+}
+
+/* Project Styling */
+.project {
+    margin-bottom: 30px; /* Increased spacing */
+    border: 3px solid #00ffff; /* Thicker border */
+    padding: 30px; /* Increased padding */
+    position: relative;
+    overflow: hidden;
+}
+
+.project::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+    border: 3px dashed #ff00ff;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.project img {
+    width: 100%;
+    max-width: 500px; /* Slightly larger max-width */
+    margin-bottom: 15px; /* Increased spacing */
+    transition: transform 0.3s ease; /* Smooth zoom on hover */
+}
+
+.project:hover img {
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
+.project h3 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 5px #000;
+    position: relative;
+    z-index: 1;
+}
+
+.project p {
+    font-size: 1.1em;
+    line-height: 1.5;
+    position: relative;
+    z-index: 1;
+}
+
+/* Contact Section Styling */
+#contact form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#contact input,
+#contact textarea {
+    margin-bottom: 20px; /* Increased spacing */
+    padding: 12px; /* Increased padding */
+    width: 85%; /* Slightly wider input fields */
+    background-color: #222;
+    color: #fff;
+    border: 2px solid #ff00ff; /* Thicker border */
+    font-size: 1.1em;
+}
+
+#contact button {
+    background: linear-gradient(to right, #ff00ff, #00ffff);
+    color: #fff;
+    padding: 12px 25px; /* Increased padding */
+    border: none;
+    cursor: pointer;
+    font-size: 1.3em; /* Larger font size */
+    text-shadow: 1px 1px 4px #000; /* Stronger shadow */
+    transition: background 0.3s ease; /* Smooth background transition */
+}
+
+#contact button:hover {
+    background: linear-gradient(to right, #00ffff, #ff00ff); /* Reverse gradient on hover */
+}
+
+/* Footer Styling */
+footer {
+    background: linear-gradient(to right, #ff00ff, #00ffff);
+    padding: 30px 20px; /* Increased padding */
+    margin-top: 40px; /* Increased margin */
+    box-shadow: 0 0 30px rgba(255, 0, 255, 0.7); /* Stronger shadow */
+}
