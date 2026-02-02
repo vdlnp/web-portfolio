@@ -4,11 +4,16 @@ Welcome to my personal portfolio website! This site showcases my skills, project
 
 ## 🌐 Live Demo
 
-> [View the website](#) <!-- Add your live site link here -->
+> [View the website](https://vdlnp.github.io/web-portfolio/) <!-- Add your live site link here -->
 
 ## 📸 Screenshot
 
-![Portfolio Screenshot](images/screenshot.png) <!-- Replace with actual screenshot path -->
+![Portfolio Screenshot](images/page-ss.png) <!-- Replace with actual screenshot path -->
+
+
+## 📄 Download My Resume
+
+[Download Resume (PDF)](docs/Resume%20-%20Viandra%20Lika%20Nur%20Prastya.pdf)
 
 ## ✨ Features
 
