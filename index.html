@@ -675,7 +675,7 @@
 
     <section class="hero visible" id="home">
         <div class="profile-photo">
-            <img src="images/profile.jpg" alt="Viandra Lika">
+            <img src="images/profile-picture.jpg" alt="Viandra Lika">
             
         </div>
         <h2>Hi, I'm <span class="typewriter" id="typewriter"></span></h2>
@@ -917,15 +917,37 @@
         });
 
         // Theme toggle
-        function toggleTheme() {
-            document.body.classList.toggle('light-mode');
-            const icon = document.getElementById('themeIcon');
-            if (document.body.classList.contains('light-mode')) {
-                icon.textContent = '🌙';
-            } else {
-                icon.textContent = '☀️';
+            // Set theme based on localStorage or OS preference
+            function setInitialTheme() {
+                const icon = document.getElementById('themeIcon');
+                let theme = localStorage.getItem('theme');
+                if (!theme) {
+                    // Use OS preference if no theme saved
+                    theme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+                }
+                if (theme === 'light') {
+                    document.body.classList.add('light-mode');
+                    icon.textContent = '🌙';
+                } else {
+                    document.body.classList.remove('light-mode');
+                    icon.textContent = '☀️';
+                }
             }
-        }
+
+            function toggleTheme() {
+                const icon = document.getElementById('themeIcon');
+                const isLight = document.body.classList.toggle('light-mode');
+                if (isLight) {
+                    icon.textContent = '🌙';
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    icon.textContent = '☀️';
+                    localStorage.setItem('theme', 'dark');
+                }
+            }
+
+            // Set theme on page load
+            window.addEventListener('DOMContentLoaded', setInitialTheme);
     </script>
 </body>
 </html>
