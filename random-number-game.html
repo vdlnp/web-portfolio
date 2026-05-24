@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Random Number Guessing Game</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;900&family=Space+Grotesk:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+  --space-dark:#01030a;
+  --space-navy:#050d1a;
+  --nebula-cyan:#00d4ff;
+  --nebula-purple:#7c3aed;
+  --nebula-pink:#ec4899;
+  --star-white:#e8f4ff;
+  --text-dim:#8ba3c1;
+  --text-bright:#ddeeff;
+}
+
+html{scroll-behavior:smooth;}
+
+body{
+  background:var(--space-dark);
+  color:var(--text-bright);
+  font-family:'Space Grotesk',sans-serif;
+  overflow-x:hidden;
+}
+
+#starfield{position:fixed;inset:0;z-index:0;pointer-events:none;}
+
+.nebula{
+  position:fixed;border-radius:50%;filter:blur(90px);
+  pointer-events:none;z-index:0;
+}
+.nebula-1{width:500px;height:500px;top:-150px;right:-150px;background:var(--nebula-purple);opacity:.1;}
+.nebula-2{width:350px;height:350px;bottom:-80px;left:-80px;background:var(--nebula-cyan);opacity:.08;}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;width:100%;z-index:1000;
+  padding:1rem 2rem;
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(1,3,10,.85);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(0,212,255,.12);
+}
+.nav-logo{
+  font-family:'Orbitron',monospace;font-size:1rem;font-weight:900;
+  background:linear-gradient(90deg,var(--nebula-cyan),var(--nebula-purple));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  text-decoration:none;letter-spacing:.08em;
+}
+.nav-back{
+  font-family:'Space Mono',monospace;font-size:.78rem;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--text-dim);text-decoration:none;
+  border:1px solid rgba(0,212,255,.2);
+  padding:8px 18px;border-radius:4px;
+  transition:all .3s;
+}
+.nav-back:hover{color:var(--nebula-cyan);border-color:var(--nebula-cyan);background:rgba(0,212,255,.06);}
+
+/* ── HERO HEADER ── */
+.page-hero{
+  position:relative;z-index:1;
+  padding:140px 2rem 80px;
+  text-align:center;
+  border-bottom:1px solid rgba(0,212,255,.08);
+}
+.page-hero::after{
+  content:'';position:absolute;bottom:0;left:10%;right:10%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--nebula-cyan),transparent);
+  box-shadow:0 0 10px var(--nebula-cyan);
+}
+.hero-eyebrow{
+  font-family:'Space Mono',monospace;font-size:.7rem;
+  letter-spacing:.3em;text-transform:uppercase;
+  color:var(--nebula-cyan);opacity:.7;margin-bottom:1rem;
+}
+.hero-title{
+  font-family:'Orbitron',monospace;
+  font-size:clamp(1.8rem,5vw,3.4rem);
+  font-weight:900;line-height:1.1;margin-bottom:1.2rem;
+  color:var(--star-white);
+}
+.hero-title span{
+  background:linear-gradient(135deg,var(--nebula-cyan),var(--nebula-purple));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.tech-tags{
+  display:flex;justify-content:center;gap:.6rem;flex-wrap:wrap;
+  margin-top:1.5rem;
+}
+.tech-tag{
+  font-family:'Space Mono',monospace;font-size:.68rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:5px 14px;border-radius:3px;
+  border:1px solid rgba(0,212,255,.25);
+  color:var(--nebula-cyan);
+  background:rgba(0,212,255,.05);
+}
+.hero-desc{
+  max-width:700px;margin:1.8rem auto 0;
+  color:var(--text-dim);font-size:1.05rem;line-height:1.8;
+}
+
+/* ── MAIN CONTENT ── */
+main{
+  position:relative;z-index:1;
+  max-width:1100px;margin:0 auto;
+  padding:80px 2rem 60px;
+}
+
+/* ── FEATURE BLOCK ── */
+.feature{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:3.5rem;
+  align-items:center;
+  margin-bottom:90px;
+  opacity:0;transform:translateY(36px);
+  transition:opacity .7s ease,transform .7s ease;
+}
+.feature.visible{opacity:1;transform:translateY(0);}
+.feature.reverse{direction:rtl;}
+.feature.reverse > *{direction:ltr;}
+
+/* image side */
+.feature-img{
+  position:relative;
+  border-radius:10px;overflow:hidden;
+  border:1px solid rgba(0,212,255,.12);
+  box-shadow:0 0 0 0 rgba(0,212,255,0);
+  transition:border-color .4s,box-shadow .4s;
+}
+.feature-img:hover{
+  border-color:rgba(0,212,255,.4);
+  box-shadow:0 0 30px rgba(0,212,255,.12);
+}
+.feature-img img{
+  width:100%;display:block;
+  transition:transform .5s ease;
+}
+.feature-img:hover img{transform:scale(1.03);}
+
+/* scan line overlay on image */
+.feature-img::after{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    0deg,
+    transparent,transparent 2px,
+    rgba(0,212,255,.015) 2px,rgba(0,212,255,.015) 4px
+  );
+  pointer-events:none;
+}
+
+/* corner accents */
+.feature-img::before{
+  content:'';position:absolute;
+  top:0;left:0;
+  width:28px;height:28px;
+  border-top:2px solid var(--nebula-cyan);
+  border-left:2px solid var(--nebula-cyan);
+  border-radius:2px 0 0 0;
+  z-index:2;
+}
+.corner-br{
+  position:absolute;bottom:0;right:0;
+  width:28px;height:28px;
+  border-bottom:2px solid var(--nebula-cyan);
+  border-right:2px solid var(--nebula-cyan);
+  border-radius:0 0 2px 0;
+  z-index:2;
+  pointer-events:none;
+}
+
+/* text side */
+.feature-text{}
+.feature-number{
+  font-family:'Orbitron',monospace;
+  font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--nebula-purple);margin-bottom:.8rem;opacity:.8;
+}
+.feature-text h2{
+  font-family:'Orbitron',monospace;
+  font-size:clamp(1.1rem,2.5vw,1.5rem);
+  font-weight:600;color:var(--star-white);
+  margin-bottom:1rem;line-height:1.3;
+}
+.feature-text p{
+  color:var(--text-dim);line-height:1.85;font-size:.97rem;
+}
+
+/* ── DIVIDER ── */
+.orbit-divider{
+  display:flex;align-items:center;gap:1rem;
+  margin:0 0 90px;opacity:.3;
+}
+.orbit-divider::before,.orbit-divider::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,transparent,var(--nebula-cyan));
+}
+.orbit-divider::after{background:linear-gradient(90deg,var(--nebula-cyan),transparent);}
+.orbit-divider span{
+  font-family:'Space Mono',monospace;font-size:.65rem;
+  letter-spacing:.2em;color:var(--nebula-cyan);white-space:nowrap;
+}
+
+/* ── BACK BUTTON SECTION ── */
+.back-section{
+  position:relative;z-index:1;
+  text-align:center;padding:20px 2rem 80px;
+}
+.btn-back{
+  display:inline-flex;align-items:center;gap:.7rem;
+  padding:14px 32px;
+  font-family:'Space Mono',monospace;font-size:.82rem;
+  letter-spacing:.12em;text-transform:uppercase;
+  text-decoration:none;color:var(--text-bright);
+  border:1px solid rgba(0,212,255,.3);border-radius:6px;
+  background:rgba(0,212,255,.05);
+  transition:all .3s;
+}
+.btn-back:hover{
+  background:rgba(0,212,255,.12);
+  border-color:var(--nebula-cyan);color:var(--nebula-cyan);
+  box-shadow:0 0 24px rgba(0,212,255,.18);
+  transform:translateY(-3px);
+}
+.btn-back-arrow{font-size:1.1rem;transition:transform .3s;}
+.btn-back:hover .btn-back-arrow{transform:translateX(-4px);}
+
+/* ── FOOTER ── */
+footer{
+  position:relative;z-index:1;
+  border-top:1px solid rgba(0,212,255,.08);
+  padding:2rem;text-align:center;
+  color:var(--text-dim);
+  font-family:'Space Mono',monospace;font-size:.72rem;
+  letter-spacing:.1em;background:var(--space-dark);
+}
+footer span{color:var(--nebula-cyan);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .feature,.feature.reverse{
+    grid-template-columns:1fr;direction:ltr;gap:2rem;
+  }
+  .feature.reverse .feature-img{order:-1;}
+  main{padding:60px 1.5rem 40px;}
+  .page-hero{padding:120px 1.5rem 60px;}
+}
+</style>
+</head>
+<body>
+
+<div class="nebula nebula-1"></div>
+<div class="nebula nebula-2"></div>
+<canvas id="starfield"></canvas>
+
+<nav>
+  <a href="index.html" class="nav-logo">VDLNP // Space</a>
+  <a href="index.html#projects" class="nav-back">← Back to Projects</a>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <p class="hero-eyebrow">// mission log · project 02</p>
+  <h1 class="hero-title">Random <span>Number Guessing</span><br>Game</h1>
+  <div class="tech-tags">
+    <span class="tech-tag">C++</span>
+  </div>
+  <p class="hero-desc">A simple yet engaging game where players guess a randomly generated number within a specified range.</p>
+</div>
+
+<!-- FEATURE BLOCKS -->
+<main>
+
+  <div class="feature">
+    <div class="feature-img">
+      <img src="images/random-number/RN1.png" alt="Enter Name">
+      <div class="corner-br"></div>
+    </div>
+    <div class="feature-text">
+      <p class="feature-number">// screen 01</p>
+      <h2>Enter Name</h2>
+      <p>Users can enter their username to start the game.</p>
+    </div>
+  </div>
+
+  <div class="orbit-divider"><span>✦</span></div>
+
+  <div class="feature reverse">
+    <div class="feature-img">
+      <img src="images/random-number/RN2.png" alt="Guess Number">
+      <div class="corner-br"></div>
+    </div>
+    <div class="feature-text">
+      <p class="feature-number">// screen 02</p>
+      <h2>Guess Your Number</h2>
+      <p>Users can enter their guess. Game will tell if your guess are Too High or Too Low.</p>
+    </div>
+  </div>
+
+  <div class="orbit-divider"><span>✦</span></div>
+
+  <div class="feature">
+    <div class="feature-img">
+      <img src="images/random-number/RN3.png" alt="Play Again?">
+      <div class="corner-br"></div>
+    </div>
+    <div class="feature-text">
+      <p class="feature-number">// screen 03</p>
+      <h2>Play Again?</h2>
+      <p>Users can play again as a new username when they say 'y' or 'Y'.</p>
+    </div>
+  </div>
+
+  <div class="orbit-divider"><span>✦</span></div>
+
+  <div class="feature reverse">
+    <div class="feature-img">
+      <img src="images/random-number/RN4.png" alt="Game ending">
+      <div class="corner-br"></div>
+    </div>
+    <div class="feature-text">
+      <p class="feature-number">// screen 04</p>
+      <h2>Game ending</h2>
+      <p>Users can stop playing when they type 'n' or 'N'. The leaderboard will be displayed with how many attempts player is scored.</p>
+    </div>
+  </div>
+
+  <div class="orbit-divider"><span>✦</span></div>
+
+
+</main>
+
+<div class="back-section">
+  <a href="index.html#projects" class="btn-back">
+    <span class="btn-back-arrow">←</span> Back to Projects
+  </a>
+</div>
+
+<footer>
+  <p>© 2026 <span>Viandra Lika Nur Prastya</span> · Crafted from stardust.</p>
+</footer>
+
+<script>
+/* ── STARFIELD ── */
+(function(){
+  const c=document.getElementById('starfield');
+  const ctx=c.getContext('2d');
+  let W,H,stars=[];
+  function resize(){W=c.width=innerWidth;H=c.height=innerHeight;init();}
+  function init(){
+    stars=[];
+    const n=Math.floor(W*H/3500);
+    for(let i=0;i<n;i++){
+      stars.push({
+        x:Math.random()*W,y:Math.random()*H,
+        r:Math.random()*1.2+.2,
+        a:Math.random(),
+        da:(Math.random()-.5)*.003,
+        speed:Math.random()*.12+.02
+      });
+    }
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    stars.forEach(s=>{
+      s.a+=s.da;
+      if(s.a>1||s.a<0)s.da*=-1;
+      s.y+=s.speed;
+      if(s.y>H){s.y=0;s.x=Math.random()*W;}
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(180,220,255,${s.a})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize',resize);
+  resize();draw();
+})();
+
+/* ── SCROLL REVEAL ── */
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:.1,rootMargin:'0px 0px -60px 0px'});
+document.querySelectorAll('.feature').forEach(f=>io.observe(f));
+</script>
+</body>
+</html>
