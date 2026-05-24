@@ -1,67 +1,72 @@
-# Viandra Lika | Portfolio Website
+# 🚀 Viandra Lika | Space Portfolio
 
-Welcome to my personal portfolio website! This site showcases my skills, projects, and contact information in a modern, responsive design.
+Welcome to my personal portfolio website — a space-themed showcase of my skills, projects, and contact information built with vanilla HTML, CSS, and JavaScript.
 
 ## 🌐 Live Demo
 
-> [View the website](https://vdlnp.github.io/web-portfolio/) <!-- Add your live site link here -->
+> [View the website](https://vdlnp.github.io/web-portfolio/)
 
 ## 📸 Screenshot
 
-![Portfolio Screenshot](images/page-ss.png) <!-- Replace with actual screenshot path -->
+![Portfolio Screenshot](images/page-ss.png)
 
-
-## 📄 Download My Resume
+## 📄 Resume
 
 [Download Resume (PDF)](docs/Resume%20-%20Viandra%20Lika%20Nur%20Prastya.pdf)
 
 ## ✨ Features
 
-- Responsive design for all devices
-- Dark/Light mode toggle with preference memory
-- Animated navigation and smooth scrolling
-- Projects section with images and descriptions
-- Contact form
-- Accessible and semantic HTML
+- Space-themed design with animated starfield background and nebula glows
+- Typewriter effect cycling through multiple roles
+- Smooth scroll-reveal animations on all sections
+- Alternating image/text project detail pages per project
+- Scroll progress bar and back-to-top button
+- Active navigation highlighting on scroll
+- Fully responsive for mobile, tablet, and desktop
+- Semantic, accessible HTML
 
 ## 🚀 Getting Started
 
 To run locally:
 
 1. Clone this repository:
-	```sh
-	git clone https://github.com/yourusername/web-portfolio.git
-	```
+   ```sh
+   git clone https://github.com/vdlnp/web-portfolio.git
+   ```
 2. Open `index.html` in your browser.
 
-No build tools required—just HTML, CSS, and JavaScript!
+No build tools or dependencies required — just HTML, CSS, and JavaScript.
 
 ## 🛠️ Built With
 
 - HTML5
-- CSS3 (Flexbox, Grid, custom animations)
+- CSS3 (Flexbox, Grid, custom animations, CSS variables)
 - JavaScript (vanilla)
+- [Google Fonts](https://fonts.google.com/) — Orbitron, Space Grotesk, Space Mono
 
 ## 📂 Folder Structure
 
 ```
 index.html
-style.css
+project-movie.html
+smart-stock.html
+rat-smash.html
+random-number.html
 README.md
 images/
+│   project-movie/
+│       FR1.png … FR12.png
+	smart-stock/
+		SS1.png
+docs/
+│   Resume - Viandra Lika Nur Prastya.pdf
 ```
-
-## 🙏 Acknowledgments
-
-- [Google Fonts](https://fonts.google.com/)
-- [Font Awesome](https://fontawesome.com/) (if used)
-- Inspiration from modern portfolio designs
 
 ## 📬 Contact
 
 - Email: viandralika@gmail.com
 - [LinkedIn](https://linkedin.com/in/viandra-lika-nur-prastya-095038289/)
-- [Github](https://github.com/vdlnp)
+- [GitHub](https://github.com/vdlnp)
 
 ## 📝 License
 
